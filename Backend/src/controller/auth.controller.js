@@ -41,6 +41,40 @@ const signup = AsyncHandler(async (req, res) => {
     )
 })
 
+const signin = AsyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    
+    const { email, password } = req.body
+    if(!email){
+        throw new ApiError(400, "Enter email")
+    }
+    const user = await User.findOne({email}).select('+password')
+
+    if(!user){
+        throw new ApiError(401,"User does not exist")
+    }
+
+    const isValidPassword = await user.isPasswordCorrect(password)
+    if(!isValidPassword){
+        throw new ApiError(401, "Invalid Password")
+    }
+    const token = user.generateToken()
+
+    const loggedInUser = await User.findById(user._id).select("-password") 
+
+    res.cookie('token', token,
+        { httpOnly: true, }
+    )
+
+    return res.status(200).json(
+        new ApiResponse(200, "User Logedin Successfully",{user:loggedInUser, token})
+    )
+})
+
 export {
-    signup
+    signup,
+    signin
 }

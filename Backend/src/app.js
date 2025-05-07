@@ -10,7 +10,7 @@ app.use(cors({
     credentials: true
 }))
 
-//middleware configration
+//middleware configration(this allow json object in the request.body)
 app.use(express.json({
     limit:'16kb'
 }))
