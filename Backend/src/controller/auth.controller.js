@@ -16,11 +16,11 @@ const signup = AsyncHandler(async (req, res) => {
     if(!username || !email || !password){
         throw new ApiError(400, 'All Fields are required')
     }
-    const esistedUser = await User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
     
-    if(esistedUser){
+    if(existedUser){
         throw new ApiError(400, 'User with email or username already esists')
     }
 
@@ -36,8 +36,8 @@ const signup = AsyncHandler(async (req, res) => {
         throw new ApiError(500, "Something Went Wrong While signin the user")
     }
 
-    return res.status(201).json(
-        new ApiResponse(201, createdUser, "User Sign Successfully")
+    return res.status(200).json(
+        new ApiResponse(200, createdUser, "User Sign Successfully")
     )
 })
 
