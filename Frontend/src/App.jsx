@@ -26,7 +26,8 @@ const App = () => {
         .then((res) => {
           dispatch(signIn(res.data.user));
         })
-        .catch(() => {
+        .catch((error) => {
+          // console.log(error);
           localStorage.removeItem("token");
           dispatch(signOut());
         });

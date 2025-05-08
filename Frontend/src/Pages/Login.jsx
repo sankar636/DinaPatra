@@ -18,6 +18,7 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState()
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -47,7 +48,7 @@ const Login = () => {
 
             if(response.status === 200){
                 const data = response.data.data
-                console.log("Data",data);
+                // console.log("Data",data);
                 localStorage.setItem('token',data.token)
                 dispatch(signIn(data.user));
                 navigate('/home')
@@ -102,7 +103,8 @@ const Login = () => {
                             }}
                         /> */}
                         <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} placeholder='password'
-                        className="border p-2 w-full mb-3"
+                        className="border p-2 w-full mb-3 input-box"
+                        
                         />
 
                         {error && <p className="text-red-500 text-xs pb-1">{error}</p>}

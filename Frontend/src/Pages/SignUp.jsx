@@ -104,7 +104,9 @@ const SignUp = () => {
                     setPassword(e.target.value)
                   }}
                 /> */}
-                <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} placeholder='password'/>
+                <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} placeholder='password'
+                className='input-box'
+                />
     
                 {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
     
@@ -121,7 +123,7 @@ const SignUp = () => {
                 <p className="text-xs text-slate-500 text-center my-4">Or</p>
     
                 <button
-                  type="submit"
+                  type="button"
                   className="btn-primary btn-light"
                   onClick={() => navigate("/login")}
                 >

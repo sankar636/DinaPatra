@@ -6,7 +6,7 @@ const PrivateRoute = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
 
   // If user is logged in, show the nested route content
-  console.log("CurrentUser",currentUser);
+  // console.log("CurrentUser",currentUser);
   
   if (currentUser) {
     return <Outlet />;
