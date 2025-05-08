@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const dailyStorySchema = new Schema({
     userId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
