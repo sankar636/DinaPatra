@@ -20,7 +20,8 @@ const uploadOnCloudinary = async (localFilePath) => {
         if(fs.existsSync(localFilePath)){
             fs.unlinkSync(localFilePath)
         }
-
+        console.log(fs.existsSync(localFilePath));
+        return response
     } catch (error) {
         console.log("Error while uploading the file into cloudinary ",error);
         if(fs.existsSync(localFilePath)){

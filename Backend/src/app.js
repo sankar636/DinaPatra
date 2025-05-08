@@ -29,5 +29,7 @@ app.use('/api/v1/auth',authRoutes)
 import userRoutes from './routes/user.route.js'
 app.use('/api/v1/user',userRoutes)
 
+import dailyStoryRoutes from './routes/dailyStory.route.js'
+app.use('/api/v1/daily-story',dailyStoryRoutes)
 
 export { app }
