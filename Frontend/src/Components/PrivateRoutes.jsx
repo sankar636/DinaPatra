@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const currentUser = useSelector((state) => state.auth.currentUser);
 
   // If user is logged in, show the nested route content
-  if (user) {
+  console.log("CurrentUser",currentUser);
+  
+  if (currentUser) {
     return <Outlet />;
   }
 
@@ -15,3 +17,5 @@ const PrivateRoute = () => {
 };
 
 export default PrivateRoute;
+
+

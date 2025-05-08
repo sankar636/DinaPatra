@@ -61,8 +61,11 @@ const signin = AsyncHandler(async (req, res, next) => {
     if(!isValidPassword){
         throw new ApiError(401, "Invalid Password")
     }
+    
     const token = user.generateToken()
-
+    
+    console.log("Token At signin",token);
+    
     const loggedInUser = await User.findById(user._id).select("-password") 
 
     res.cookie('token', token,

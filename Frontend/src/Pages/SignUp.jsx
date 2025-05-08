@@ -47,7 +47,7 @@ const SignUp = () => {
             if(response.status === 200 ){
                 const data = response.data
                 console.log("Data",data);
-                localStorage.setItem('token',data.token)
+                
                 navigate('/login')
             }
         } catch (error) {

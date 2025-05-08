@@ -4,15 +4,15 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Start = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const auth = useSelector((state) => state.auth.currentUser);
   const navigate = useNavigate();
 
   // Auto-redirect if user is already logged in
   useEffect(() => {
-    if (user) {
+    if (auth) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [auth, navigate]);
 
   const handleStart = () => {
     navigate("/login");

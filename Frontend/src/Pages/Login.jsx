@@ -1,19 +1,70 @@
 import React, { useState } from 'react'
-import PasswordInputBox from '../Components/PasswordInputBox.jsx'
+// import PasswordInputBox from '../Components/PasswordInputBox.jsx'
 import { useNavigate } from 'react-router-dom'
+import { validateEmail } from '../utils/helper.js'
+import { useDispatch } from 'react-redux'
+import { signInFailure, signInInitial, signIn } from '../store/authSlice.js'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 const Login = () => {
     
     const navigate = useNavigate()
+    const dispatch =useDispatch()
+    
+    const { loading, currentUser } = useSelector((state) => state.auth)
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState()
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        
+        if (!validateEmail(email)) {
+            setError("Please enter a valid email address.")
+            return
+          }
+      
+          if (!password) {
+            setError("Please enter your password.")
+            return
+          }
+      
+          setError(null)
+        const user = {
+            email: email,
+            password: password
+        }
+
+        const baseURL = import.meta.env.VITE_BASE_URL
+        try {
+
+            dispatch(signInInitial()) // when click in the sign in button this process will initialize
+
+
+            const response = await axios.post(`${baseURL}/api/v1/auth/signin`,user)
+
+            if(response.status === 200){
+                const data = response.data.data
+                console.log("Data",data);
+                localStorage.setItem('token',data.token)
+                dispatch(signIn(data.user));
+                navigate('/home')
+            }
+        } catch (error) {
+            dispatch(signInFailure("Login failed"))
+            console.log("Error While signin The user",error);
+            setError("Something wrong while signin the user")
+        }
     }
+
+    useEffect(() => {
+        if (!loading && currentUser) {
+          navigate("/home")
+        }
+      }, [currentUser])
+
     return (
         <div className="h-screen bg-cyan-50 overflow-hidden relative">
             <div className="login-ui-box right-10 -top-40" />
@@ -37,8 +88,9 @@ const Login = () => {
 
                         <input
                             type="email"
+                            className="border p-2 w-full mb-3 input-box"
                             placeholder="Email"
-                            className="input-box"
+                           
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -49,19 +101,21 @@ const Login = () => {
                                 setPassword(e.target.value)
                             }}
                         /> */}
-                        <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} placeholder='password'/>
+                        <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} placeholder='password'
+                        className="border p-2 w-full mb-3"
+                        />
 
                         {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
 
-                        {/* {loading ? ( */}
+                        {loading ? (
                             <p className="animate-pulse w-full text-center btn-primary">
                                 LOADING...
                             </p>
-                        {/* ) : ( */}
+                        ) : (
                             <button type="submit" className="btn-primary">
                                 LOGIN
                             </button>
-                        {/* )} */}
+                        )}
 
                         <p className="text-xs text-slate-500 text-center my-4">Or</p>
 
