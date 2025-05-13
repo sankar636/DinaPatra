@@ -35,7 +35,7 @@ const addDailyStory = AsyncHandler(async (req, res) => {
 
     const image = await uploadOnCloudinary(imageLocalPath)
 
-    console.log(image);
+    console.log(image.url);
 
     if (!image) {
         throw new ApiError(400, "Image was not uploaded to Cloudinary")
@@ -66,14 +66,14 @@ const addDailyStory = AsyncHandler(async (req, res) => {
 const getAllDailyStory = AsyncHandler(async (req, res) => {
     const userId = req.user._id
 
-    const dailyStories = await DailyStory.find({ userId: userId }).sort({ isFavourite: -1 })
+    const dailyStories = await DailyStory.find({ userId: userId }).sort({ createdAt: -1 })
 
     if (!dailyStories) {
         throw new ApiError(400, "No Story Found")
     }
 
     return res.status(200).json(
-        new ApiResponse(200, "Add stories", { dailyStories })
+        new ApiResponse(200, "Fetched stories successfully", { dailyStories })
     )
 })
 

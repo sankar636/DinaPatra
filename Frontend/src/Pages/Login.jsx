@@ -44,7 +44,7 @@ const Login = () => {
             dispatch(signInInitial()) // when click in the sign in button this process will initialize
 
 
-            const response = await axios.post(`${baseURL}/api/v1/auth/signin`,user)
+            const response = await axios.post(`${baseURL}/auth/signin`,user)
 
             if(response.status === 200){
                 const data = response.data.data

@@ -27,7 +27,8 @@ router.route('/get-allstory').get(
     getAllDailyStory
 )
 
-router.route('/edit-story/:id').put(verifyJWT,
+router.route('/edit-story/:id').put(
+    verifyJWT,
     upload.single("image"),
     editDailyStory)
 

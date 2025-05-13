@@ -19,7 +19,7 @@ const Navbar = () => {
     // useEffect(() => {
         const onLogout = async () => {
             try {
-                const response = await axios.post(`${baseURL}/api/v1/user/signout`,
+                const response = await axios.post(`${baseURL}/user/signout`,
                     {},
                     {
                         headers: {

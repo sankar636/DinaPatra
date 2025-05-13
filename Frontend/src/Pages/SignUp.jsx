@@ -42,7 +42,7 @@ const SignUp = () => {
 
         const baseURL = import.meta.env.VITE_BASE_URL
         try {
-            const response = await axios.post(`${baseURL}/api/v1/auth/signup`,newUser)
+            const response = await axios.post(`${baseURL}/auth/signup`,newUser)
 
             if(response.status === 200 ){
                 const data = response.data
