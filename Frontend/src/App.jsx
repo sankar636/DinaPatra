@@ -12,6 +12,7 @@ import Login from './Pages/Login.jsx'
 import SignUp from './Pages/SignUp.jsx'
 import { signIn, signOut } from "./store/authSlice.js";
 import  store  from './store/store.js'; // Import the store
+import ViewDailyStory from './Pages/ViewDailyStory.jsx'; // Import the new page
 
 
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
 
         <Route element={<PrivateRoute />}>
           <Route path='/home' element={<Home />} />
+          <Route path="/daily-story/:storyId" element={<ViewDailyStory />} /> {/* Add route */}
         </Route>
 
         <Route path="/login" element={<Login />} />

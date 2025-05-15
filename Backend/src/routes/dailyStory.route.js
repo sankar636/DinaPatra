@@ -5,7 +5,7 @@ const router = Router()
 import { body } from "express-validator";
 
 import upload from "../middleware/multer.middleware.js";
-import { addDailyStory, editDailyStory, getAllDailyStory } from "../controller/dailyStory.controller.js";
+import { addDailyStory, editDailyStory, getAllDailyStory, getDailyStoryById } from "../controller/dailyStory.controller.js";
 import verifyJWT from "../middleware/auth.middleware.js";
 
 router.route('/add').post(
@@ -32,4 +32,9 @@ router.route('/edit-story/:id').put(
     upload.single("image"),
     editDailyStory)
 
-export default router 
+router.route('/:id').get(
+    verifyJWT,
+    getDailyStoryById
+);
+
+export default router

@@ -131,10 +131,24 @@ const editDailyStory = AsyncHandler(async (req, res) => {
     );
 })
 
+const getDailyStoryById = AsyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user._id;
+
+    const story = await DailyStory.findOne({ _id: id, userId: userId });
+
+    if (!story) {
+        throw new ApiError(404, "Story not found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, "Fetched story successfully", story)
+    );
+});
 
 export {
     addDailyStory,
     getAllDailyStory,
     editDailyStory,
-
-}
+    getDailyStoryById, // Export the new controller
+};
