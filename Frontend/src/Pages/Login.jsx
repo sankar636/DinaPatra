@@ -62,9 +62,9 @@ const Login = () => {
 
     useEffect(() => {
         if (!loading && currentUser) {
-          navigate("/home")
+          navigate("/home"); // Redirect to home if user is logged in
         }
-      }, [currentUser])
+    }, [loading, currentUser]); // Add `loading` to dependency array
 
     return (
         <div className="h-screen bg-cyan-50 overflow-hidden relative">

@@ -11,6 +11,7 @@ import PrivateRoute from './Components/PrivateRoutes.jsx'
 import Login from './Pages/Login.jsx'
 import SignUp from './Pages/SignUp.jsx'
 import { signIn, signOut } from "./store/authSlice.js";
+import  store  from './store/store.js'; // Import the store
 
 
 const App = () => {
@@ -18,21 +19,23 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const currentUser = store.getState().auth.currentUser;
+
+    if (token && !currentUser) {
       axios
-        .get(`${import.meta.env.VITE_BASE_URL}/api/v1/user/getuser`, {
+        .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          dispatch(signIn(res.data.user));
+          dispatch(signIn(res.data.user)); // Update Redux state with user data
         })
         .catch((error) => {
-          // console.log(error);
-          localStorage.removeItem("token");
-          dispatch(signOut());
+          console.error("Error fetching user data:", error);
+          localStorage.removeItem("token"); // Clear token if invalid
+          dispatch(signOut()); // Clear Redux state
         });
     }
-  }, []); // this useEffect part is same as a OritectedWraooer (in MoCab)
+  }, []); // Ensure Redux state is initialized on app load
 
   return (
     <BrowserRouter>

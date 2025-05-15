@@ -17,10 +17,11 @@ const authSlice = createSlice({
             state.error = null
         },
         signIn: (state, action) => {
-            state.currentUser = action.payload
-            state.loading = false
+            state.currentUser = action.payload;
+            state.loading = false;
             state.status = true;
-            state.error = null
+            state.error = null;
+            localStorage.setItem('currentUser', JSON.stringify(action.payload)); // Persist currentUser
         },
         signInFailure: (state, action) => {
             state.loading = false
@@ -30,6 +31,8 @@ const authSlice = createSlice({
             state.currentUser = null
             state.error = null
             state.loading = false
+            state.status = false; // Ensure status reflects logged-out state
+            localStorage.removeItem('currentUser'); // Clear persisted currentUser
         }
 
     }
